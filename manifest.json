@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.1.0",
+        "changelog": "Ver https://github.com/alberba/jellyfin-plugin-seerr-reporter/releases/tag/v1.0.1",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/alberba/jellyfin-plugin-seerr-reporter/releases/download/v1.0.1/seerr-reporter.zip",
+        "checksum": "2c95f1b5e61a830d9caeaa6a4d04a23e",
+        "timestamp": "2026-09-13T16:26:19Z"
+      },
+      {
         "version": "1.0.0.0",
         "changelog": "Ver https://github.com/alberba/jellyfin-plugin-seerr-reporter/releases/tag/v1.0.0.0",
         "targetAbi": "12.0.0.0",
