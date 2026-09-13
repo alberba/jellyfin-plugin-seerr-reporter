@@ -323,13 +323,20 @@
     }
 
     function readErrorMessage(response) {
+        // A Seerr-side failure comes back with a message from the plugin; anything
+        // else (the endpoint throwing, auth) has no body, so report the status.
+        var status = response && response.status
+            ? 'Error del plugin (HTTP ' + response.status + ').'
+            : null;
+
         if (!response || typeof response.json !== 'function') {
-            return Promise.resolve(null);
+            return Promise.resolve(status);
         }
         return response.json().then(function (body) {
-            return body && body.Message ? body.Message : (body && body.message) || null;
+            var message = body && (body.Message || body.message);
+            return message || status;
         }).catch(function () {
-            return null;
+            return status;
         });
     }
 

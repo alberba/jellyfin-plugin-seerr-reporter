@@ -139,14 +139,24 @@
                 }).then(function (result) {
                     output.textContent = '✅ ' + (result.Message || result.message || 'Conexión correcta.');
                 }).catch(function (response) {
+                    // Distinguish a Seerr-side failure (the plugin answers with a
+                    // message) from the endpoint itself failing (no JSON body).
+                    var status = response && response.status
+                        ? ' (HTTP ' + response.status + ')'
+                        : '';
+                    var fallback = status
+                        ? 'El endpoint del plugin falló' + status + '. Mira el log de Jellyfin.'
+                        : 'No se pudo contactar con el servidor de Jellyfin.';
+
                     if (response && typeof response.json === 'function') {
                         response.json().then(function (body) {
-                            output.textContent = '❌ ' + ((body && (body.Message || body.message)) || 'Error de conexión.');
+                            var message = body && (body.Message || body.message);
+                            output.textContent = '❌ ' + (message || fallback);
                         }).catch(function () {
-                            output.textContent = '❌ Error de conexión.';
+                            output.textContent = '❌ ' + fallback;
                         });
                     } else {
-                        output.textContent = '❌ Error de conexión.';
+                        output.textContent = '❌ ' + fallback;
                     }
                 });
             }

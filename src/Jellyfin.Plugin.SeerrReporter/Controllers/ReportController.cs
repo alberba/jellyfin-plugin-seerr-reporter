@@ -4,6 +4,7 @@ using System.Text;
 using Jellyfin.Plugin.SeerrReporter.Configuration;
 using Jellyfin.Plugin.SeerrReporter.Controllers.Dtos;
 using Jellyfin.Plugin.SeerrReporter.Services;
+using MediaBrowser.Common.Api;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
@@ -19,7 +20,7 @@ namespace Jellyfin.Plugin.SeerrReporter.Controllers;
 /// Receives issue reports from jellyfin-web and forwards them to Seerr.
 /// </summary>
 [ApiController]
-[Authorize(Policy = "DefaultAuthorization")]
+[Authorize]
 [Route("Plugins/SeerrReporter")]
 [Produces("application/json")]
 public class ReportController : ControllerBase
@@ -139,7 +140,7 @@ public class ReportController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Connection result.</returns>
     [HttpPost("TestConnection")]
-    [Authorize(Policy = "RequiresElevation")]
+    [Authorize(Policy = Policies.RequiresElevation)]
     public async Task<ActionResult<ReportResponseDto>> TestConnection(
         [FromBody] TestConnectionRequestDto? request,
         CancellationToken cancellationToken)
