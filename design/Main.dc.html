@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #00a4dc; } a:hover { color: #0cb0e8; }
+    .jf { font-family: "Noto Sans", Arial, Helvetica, sans-serif; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+    /* .emby-button + .detailButton, valores literales de jellyfin-web 10.11.8 */
+    .detailButton {
+      position: relative; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      box-sizing: border-box; margin: 0; padding: 11px 14px;
+      background: transparent; border: 0; border-radius: 3px;
+      color: rgba(255,255,255,0.7); font: inherit; font-weight: 600;
+      line-height: 1.35; cursor: pointer; transition: 0.2s;
+    }
+    .detailButton svg { width: 26px; height: 26px; display: block; fill: currentColor; }
+  </style>
+</helmet>
+
+<div class="jf" style="width: 1280px; height: 680px; background: #101010; color: rgba(255,255,255,0.7); box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden">
+
+  <!-- skinHeader: #202020 -->
+  <div style="height: 56px; flex-shrink: 0; background: #202020; display: flex; align-items: center; gap: 18px; padding: 0 20px; box-sizing: border-box">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    <div style="flex-grow: 1"></div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    <div style="width: 30px; height: 30px; border-radius: 50%; background: #00a4dc; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 600">A</div>
+  </div>
+
+  <div style="display: flex; gap: 40px; padding: 36px 40px; box-sizing: border-box; flex-grow: 1">
+
+    <!-- póster: marcador, no arte inventado -->
+    <div style="width: 250px; height: 375px; flex-shrink: 0; border-radius: 3px; background: #292929; border: 1px dashed rgba(255,255,255,0.18); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: rgba(255,255,255,0.35)">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+      <div style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase">Póster</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; min-width: 0">
+      <h1 style="margin: 0; font-size: 44px; font-weight: 700; color: #fff; line-height: 1.1">Dune: Parte Dos</h1>
+
+      <div style="display: flex; align-items: center; gap: 14px; margin-top: 14px; font-size: 14px; color: #fff">
+        <span>2024</span>
+        <span style="opacity: 0.4">·</span>
+        <span>2 h 46 min</span>
+        <span style="opacity: 0.4">·</span>
+        <span style="border: 1px solid rgba(255,255,255,0.35); border-radius: 3px; padding: 1px 6px; font-size: 12px">12</span>
+        <span style="opacity: 0.4">·</span>
+        <span>1080p</span>
+        <span style="opacity: 0.4">·</span>
+        <span>Castellano, Inglés</span>
+      </div>
+
+      <!-- .mainDetailButtons: display flex; align-items center; margin 1em 0 -->
+      <div style="display: flex; align-items: center; margin: 16px 0">
+        <button type="button" class="detailButton" title="Reanudar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Reproducir">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Marcar como visto">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Favorito">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <!-- Seerr Reporter -->
+        <button type="button" class="detailButton" title="Reportar un problema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Más">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </button>
+      </div>
+
+      <div style="font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 14px">Ciencia ficción · Aventura</div>
+
+      <p style="margin: 0; max-width: 640px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.8); text-wrap: pretty">
+        Paul Atreides se une a los Fremen y emprende el camino de la venganza contra los conspiradores
+        que destruyeron a su familia, mientras intenta evitar el terrible futuro que solo él puede prever.
+      </p>
+
+      <div style="margin-top: auto; display: flex; gap: 48px; font-size: 14px">
+        <div>
+          <div style="color: rgba(255,255,255,0.5); margin-bottom: 4px">Dirección</div>
+          <div style="color: #fff">Denis Villeneuve</div>
+        </div>
+        <div>
+          <div style="color: rgba(255,255,255,0.5); margin-bottom: 4px">Subtítulos</div>
+          <div style="color: #fff">Castellano (forzados), Inglés</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #00a4dc; } a:hover { color: #0cb0e8; }
+    .jf { font-family: "Noto Sans", Arial, Helvetica, sans-serif; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+    .detailButton {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; box-sizing: border-box; margin: 0; padding: 11px 14px;
+      background: transparent; border: 0; border-radius: 3px;
+      color: rgba(255,255,255,0.7); font: inherit; font-weight: 600; line-height: 1.35;
+      cursor: pointer; transition: 0.2s;
+    }
+    .detailButton svg { width: 26px; height: 26px; display: block; fill: currentColor; }
+    /* .button-flat:hover { color: #00a4dc } */
+    .is-hover { color: #00a4dc; }
+    /* .emby-button.show-focus:focus { background:#00a4dc; color:#fff } + transform: scale(1.2) */
+    .is-focus { background: #00a4dc; color: #fff; }
+    /* .detailButton-text { margin-top: 0.7em; font-size: 80%; font-weight: 400 } */
+    .detailButton-text { margin-top: 11px; font-size: 80%; font-weight: 400; white-space: nowrap; }
+    .caption { font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; }
+    .sectionTitle { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 18px; }
+  </style>
+</helmet>
+
+<div class="jf" style="width: 960px; height: 480px; background: #101010; color: rgba(255,255,255,0.7); box-sizing: border-box; padding: 32px 36px; display: flex; flex-direction: column; gap: 34px">
+
+  <div>
+    <h2 class="sectionTitle">Estados — icono solo, como el resto de la fila</h2>
+    <div style="display: flex; align-items: flex-start; gap: 46px">
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <div style="height: 52px; display: flex; align-items: center">
+          <button type="button" class="detailButton" title="Reportar un problema">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          </button>
+        </div>
+        <div class="caption">Reposo<br><span style="opacity:0.7">rgba(255,255,255,.8)</span></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <div style="height: 52px; display: flex; align-items: center">
+          <button type="button" class="detailButton is-hover" title="Reportar un problema">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          </button>
+        </div>
+        <div class="caption">Hover<br><span style="opacity:0.7">#00a4dc, sin fondo</span></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <div style="height: 52px; display: flex; align-items: center">
+          <button type="button" class="detailButton is-focus" title="Reportar un problema">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          </button>
+        </div>
+        <div class="caption">Foco de teclado<br><span style="opacity:0.7">fondo #00a4dc + scale(1.2)</span></div>
+      </div>
+
+      <div style="width: 1px; align-self: stretch; background: rgba(255,255,255,0.12)"></div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div style="height: 52px; display: flex; align-items: center">
+          <button type="button" class="detailButton" title="Marcar como visto">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </button>
+          <button type="button" class="detailButton" title="Favorito">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <button type="button" class="detailButton" title="Reportar un problema">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          </button>
+          <button type="button" class="detailButton" title="Más">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          </button>
+        </div>
+        <div class="caption" style="text-align: left">En la fila: misma altura, mismo ritmo</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 1px; background: rgba(255,255,255,0.12)"></div>
+
+  <div>
+    <h2 class="sectionTitle">Variante con etiqueta — lo que hace hoy reporter.js</h2>
+    <div style="display: flex; align-items: flex-start; gap: 40px">
+      <div style="display: flex; align-items: flex-start">
+        <button type="button" class="detailButton" title="Marcar como visto">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Favorito">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <button type="button" class="detailButton" title="Reportar un problema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          <div class="detailButton-text">Reportar</div>
+        </button>
+        <button type="button" class="detailButton" title="Más">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </button>
+      </div>
+      <p style="margin: 0; max-width: 420px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.6); text-wrap: pretty">
+        La clase <code style="color:#00a4dc">detailButton-text</code> existe en el CSS de Jellyfin 10.11.8
+        pero no la usa ningún botón de la fila: todos son icono + <code style="color:#00a4dc">title</code>.
+        Añadir la etiqueta hace el botón 22&nbsp;px más alto y desalinea verticalmente a sus vecinos.
+      </p>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

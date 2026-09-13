@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #00a4dc; } a:hover { color: #0cb0e8; }
+    .jf { font-family: "Noto Sans", Arial, Helvetica, sans-serif; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+    /* .toastContainer: fixed; bottom 0; left 0; padding 1em */
+    .toastContainer { position: absolute; left: 0; bottom: 0; padding: 16px; display: flex; flex-direction: column; }
+    /* .toast: min-width 20em; padding 1em 1.5em; radius .15em; font-size 110%; bg #303030 */
+    .toast {
+      min-width: 320px; box-sizing: border-box; padding: 16px 24px;
+      border-radius: 2px; font-size: 17.6px; margin-right: auto;
+      background: #303030; color: rgba(255,255,255,0.87);
+      box-shadow: 0 1.2px 4.6px 0 rgba(0,0,0,0.37);
+    }
+  </style>
+</helmet>
+
+<div class="jf" style="position: relative; width: 1280px; height: 720px; background: #101010; color: rgba(255,255,255,0.7); overflow: hidden">
+
+  <div style="position: absolute; inset: 0; display: flex; flex-direction: column">
+    <div style="height: 56px; background: #202020; flex-shrink: 0"></div>
+    <div style="display: flex; gap: 40px; padding: 36px 40px">
+      <div style="width: 250px; height: 375px; border-radius: 3px; background: #292929; flex-shrink: 0"></div>
+      <div style="flex-grow: 1">
+        <div style="height: 44px; width: 440px; background: #262626; border-radius: 3px"></div>
+        <div style="height: 14px; width: 320px; background: #1e1e1e; border-radius: 3px; margin-top: 18px"></div>
+        <div style="display: flex; gap: 8px; margin-top: 22px">
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+        </div>
+        <div style="height: 12px; width: 600px; background: #1a1a1a; border-radius: 3px; margin-top: 28px"></div>
+        <div style="height: 12px; width: 560px; background: #1a1a1a; border-radius: 3px; margin-top: 10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toastContainer">
+    <div class="toast">Incidencia creada en Seerr. ¡Gracias!</div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

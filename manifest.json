@@ -1,0 +1,11 @@
+[
+  {
+    "guid": "6f3c1f4e-0d6b-4d2a-9a2b-1f5f9c7a8e21",
+    "name": "Seerr Reporter",
+    "overview": "Reporta incidencias de reproducción a Seerr desde Jellyfin.",
+    "description": "Añade un botón de reporte a las páginas de detalle de Jellyfin. El usuario elige vídeo, audio o subtítulos, escribe una nota opcional, y el plugin abre la incidencia correspondiente en Seerr / Overseerr usando la API Key de administrador guardada en el servidor.",
+    "owner": "alberba",
+    "category": "General",
+    "versions": []
+  }
+]

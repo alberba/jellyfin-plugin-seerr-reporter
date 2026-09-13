@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #00a4dc; } a:hover { color: #0cb0e8; }
+    .jf { font-family: "Noto Sans", Arial, Helvetica, sans-serif; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+    /* .emby-input / .emby-textarea: background #292929; border .16em solid #292929; radius .2em */
+    .field { background: rgba(255,255,255,0.09); border: 3px solid rgba(255,255,255,0.09); border-radius: 3px; color: rgba(255,255,255,0.8); font: inherit; box-sizing: border-box; }
+    .field-focus { border-color: #00a4dc; }
+    .typeTile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px 8px; cursor: pointer; transition: 0.2s; min-height: 88px; }
+    .typeTile svg { width: 24px; height: 24px; fill: currentColor; display: block; }
+    .typeTile-label { font-size: 13px; font-weight: 600; }
+    /* .inputLabel { color: rgba(255,255,255,0.7) } */
+    .inputLabel { display: block; font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+    /* .emby-button: padding .9em 1em; radius .2em; font-weight 600; line-height 1.35 */
+    .embyButton { padding: 14px 16px; border: 0; border-radius: 3px; font: inherit; font-weight: 600; line-height: 1.35; cursor: pointer; box-sizing: border-box; min-width: 150px; text-align: center; transition: 0.2s; }
+    .raised { background: #424242; color: rgba(255,255,255,0.7); }
+    .button-submit { background: #00a4dc; color: rgba(0,0,0,0.87); }
+    .iconButton { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: rgba(255,255,255,0.8); cursor: pointer; }
+    .iconButton svg { width: 24px; height: 24px; fill: currentColor; }
+  </style>
+</helmet>
+
+<div class="jf" style="position: relative; width: 1280px; height: 820px; background: #101010; color: rgba(255,255,255,0.7); overflow: hidden">
+
+  <!-- página de detalle detrás del diálogo -->
+  <div style="position: absolute; inset: 0; display: flex; flex-direction: column">
+    <div style="height: 56px; background: #202020; flex-shrink: 0"></div>
+    <div style="display: flex; gap: 40px; padding: 36px 40px">
+      <div style="width: 250px; height: 375px; border-radius: 3px; background: #292929; flex-shrink: 0"></div>
+      <div style="flex-grow: 1">
+        <div style="height: 44px; width: 440px; background: #262626; border-radius: 3px"></div>
+        <div style="height: 14px; width: 320px; background: #1e1e1e; border-radius: 3px; margin-top: 18px"></div>
+        <div style="display: flex; gap: 8px; margin-top: 22px">
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+          <div style="width: 48px; height: 48px; background: #1e1e1e; border-radius: 3px"></div>
+        </div>
+        <div style="height: 12px; width: 600px; background: #1a1a1a; border-radius: 3px; margin-top: 28px"></div>
+        <div style="height: 12px; width: 560px; background: #1a1a1a; border-radius: 3px; margin-top: 10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- .dialogBackdropOpened: #000 a 0.5 -->
+  <div style="position: absolute; inset: 0; background: #000; opacity: 0.5"></div>
+
+  <!-- .dialog: radius .2em + sombra literal de dialoghelper.scss -->
+  <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center">
+    <div style="width: 560px; border-radius: 3px; overflow: hidden; background: #101010; box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.4)">
+
+      <!-- .formDialogHeader: #202020; padding 1em 0.5em -->
+      <div style="background: #202020; padding: 16px 8px; display: flex; align-items: center">
+        <button type="button" class="iconButton" title="Cerrar" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <h3 style="margin: 0 0 0 4px; font-size: 19px; font-weight: 400; color: #fff">Reportar un problema</h3>
+      </div>
+
+      <div style="padding: 22px 24px 26px">
+        <p style="margin: 0 0 22px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.6); text-wrap: pretty">
+          Se creará una incidencia en Seerr para <strong style="color: rgba(255,255,255,0.85); font-weight: 600">Dune: Parte Dos</strong>.
+          El equipo la verá junto al resto de peticiones.
+        </p>
+
+        <span class="inputLabel">Tipo de problema</span>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 22px">
+          <div class="field typeTile" style="">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+            <span class="typeTile-label">Vídeo</span>
+          </div>
+          <div class="field typeTile" style="">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            <span class="typeTile-label">Audio</span>
+          </div>
+          <div class="field typeTile" style="">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z"/></svg>
+            <span class="typeTile-label">Subtítulos</span>
+          </div>
+          <div class="field typeTile" style="">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+            <span class="typeTile-label">Otro</span>
+          </div>
+        </div>
+
+        <label class="inputLabel" for="comentario">Comentario (opcional)</label>
+        <div class="field " style="padding: 12px; min-height: 92px; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.35)">Ej: el audio no está en castellano</div>
+      </div>
+
+      <!-- .formDialogFooter: #202020; justify-content center -->
+      <div style="background: #202020; padding: 16px; display: flex; justify-content: center; gap: 16px">
+        <button type="button" class="embyButton raised">Cancelar</button>
+        <button type="button" class="embyButton button-submit" style="">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

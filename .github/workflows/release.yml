@@ -1,0 +1,97 @@
+name: Build and release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Derive version from tag
+        id: version
+        run: |
+          RAW="${GITHUB_REF_NAME#v}"
+          # Jellyfin expects a four-part version
+          while [ "$(echo "$RAW" | tr -cd '.' | wc -c)" -lt 3 ]; do RAW="$RAW.0"; done
+          echo "version=$RAW" >> "$GITHUB_OUTPUT"
+          echo "Building $RAW"
+
+      - name: Build
+        run: >
+          dotnet publish src/Jellyfin.Plugin.SeerrReporter/Jellyfin.Plugin.SeerrReporter.csproj
+          --configuration Release
+          --output artifacts/publish
+          -p:Version=${{ steps.version.outputs.version }}
+          -p:AssemblyVersion=${{ steps.version.outputs.version }}
+          -p:FileVersion=${{ steps.version.outputs.version }}
+
+      - name: Package
+        id: package
+        run: |
+          mkdir -p artifacts/plugin
+          cp artifacts/publish/Jellyfin.Plugin.SeerrReporter.dll artifacts/plugin/
+          (cd artifacts/plugin && zip -r ../seerr-reporter.zip .)
+          echo "md5=$(md5sum artifacts/seerr-reporter.zip | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/seerr-reporter.zip
+          body: |
+            Jellyfin.Plugin.SeerrReporter ${{ github.ref_name }}
+
+            Se instala desde Dashboard → Plugins → Repositorios, no hace falta copiar ficheros.
+
+      - name: Update manifest on main
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          CHECKSUM: ${{ steps.package.outputs.md5 }}
+          SOURCE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}/seerr-reporter.zip
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          python3 - <<'PY'
+          import json, os, datetime
+
+          version = os.environ["VERSION"]
+          entry = {
+              "version": version,
+              "changelog": f"Ver https://github.com/{os.environ['GITHUB_REPOSITORY']}/releases/tag/v{version}",
+              "targetAbi": "12.0.0.0",
+              "sourceUrl": os.environ["SOURCE_URL"],
+              "checksum": os.environ["CHECKSUM"],
+              "timestamp": datetime.datetime.now(datetime.timezone.utc)
+                  .strftime("%Y-%m-%dT%H:%M:%SZ"),
+          }
+
+          with open("manifest.json") as fh:
+              manifest = json.load(fh)
+
+          versions = manifest[0]["versions"]
+          # Re-tagging the same version replaces its entry instead of duplicating it.
+          versions = [v for v in versions if v["version"] != version]
+          manifest[0]["versions"] = [entry] + versions
+
+          with open("manifest.json", "w") as fh:
+              json.dump(manifest, fh, ensure_ascii=False, indent=2)
+              fh.write("\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifest.json
+          git diff --quiet --cached || git commit -m "Publicar $VERSION en el manifest"
+          git push origin main

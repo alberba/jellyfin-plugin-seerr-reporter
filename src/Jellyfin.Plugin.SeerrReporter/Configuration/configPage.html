@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Seerr Reporter</title>
+</head>
+<body>
+<div id="SeerrReporterConfigPage" data-role="page" class="page type-interior pluginConfigurationPage"
+     data-require="emby-input,emby-button,emby-checkbox">
+    <div data-role="content">
+        <div class="content-primary">
+            <form id="SeerrReporterConfigForm">
+                <div class="verticalSection">
+                    <h2 class="sectionTitle">Seerr Reporter</h2>
+                    <p class="fieldDescription">
+                        Permite a tus usuarios reportar problemas de audio, vídeo o subtítulos
+                        desde Jellyfin, creando incidencias en Seerr / Overseerr.
+                    </p>
+                </div>
+
+                <div class="inputContainer">
+                    <input is="emby-input" type="text" id="SeerrUrl" label="URL de Seerr" required />
+                    <div class="fieldDescription">
+                        URL base, sin <code>/api</code>. Ej: <code>http://seerr:5055</code>
+                        si ambos contenedores comparten red Docker.
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <input is="emby-input" type="password" id="ApiKey" label="API Key de Seerr" required />
+                    <div class="fieldDescription">
+                        Seerr → Ajustes → General → API Key. Se guarda en el servidor y nunca
+                        se envía al navegador.
+                    </div>
+                </div>
+
+                <div class="verticalSection">
+                    <h3 class="checkboxListLabel">Tipos de incidencia disponibles</h3>
+                    <div class="checkboxList">
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="EnableVideoReports" />
+                            <span>Vídeo</span>
+                        </label>
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="EnableAudioReports" />
+                            <span>Audio</span>
+                        </label>
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="EnableSubtitleReports" />
+                            <span>Subtítulos</span>
+                        </label>
+                        <label>
+                            <input is="emby-checkbox" type="checkbox" id="EnableOtherReports" />
+                            <span>Otro</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="verticalSection">
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="InjectClientScript" />
+                        <span>Inyectar el botón en la interfaz web</span>
+                    </label>
+                    <div class="fieldDescription checkboxFieldDescription">
+                        Modifica <code>index.html</code> de jellyfin-web. Requiere que el directorio
+                        web sea escribible y recargar la página (Ctrl+F5) tras guardar.
+                    </div>
+
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="IncludeUsernameInMessage" />
+                        <span>Incluir el nombre de usuario en la incidencia</span>
+                    </label>
+                </div>
+
+                <div>
+                    <button is="emby-button" type="submit" class="raised button-submit block">
+                        <span>Guardar</span>
+                    </button>
+                    <button is="emby-button" type="button" id="TestConnectionButton" class="raised block">
+                        <span>Probar conexión</span>
+                    </button>
+                    <p id="TestConnectionResult" class="fieldDescription"></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        (function () {
+            var pluginId = '6f3c1f4e-0d6b-4d2a-9a2b-1f5f9c7a8e21';
+
+            var checkboxes = [
+                'EnableVideoReports',
+                'EnableAudioReports',
+                'EnableSubtitleReports',
+                'EnableOtherReports',
+                'InjectClientScript',
+                'IncludeUsernameInMessage'
+            ];
+
+            function load(page) {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (config) {
+                    page.querySelector('#SeerrUrl').value = config.SeerrUrl || '';
+                    page.querySelector('#ApiKey').value = config.ApiKey || '';
+                    checkboxes.forEach(function (id) {
+                        page.querySelector('#' + id).checked = !!config[id];
+                    });
+                    Dashboard.hideLoadingMsg();
+                });
+            }
+
+            function save(page) {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (config) {
+                    config.SeerrUrl = page.querySelector('#SeerrUrl').value.trim();
+                    config.ApiKey = page.querySelector('#ApiKey').value.trim();
+                    checkboxes.forEach(function (id) {
+                        config[id] = page.querySelector('#' + id).checked;
+                    });
+                    ApiClient.updatePluginConfiguration(pluginId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+            }
+
+            function testConnection(page) {
+                var output = page.querySelector('#TestConnectionResult');
+                output.textContent = 'Probando...';
+                ApiClient.ajax({
+                    type: 'POST',
+                    url: ApiClient.getUrl('Plugins/SeerrReporter/TestConnection'),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        seerrUrl: page.querySelector('#SeerrUrl').value.trim(),
+                        apiKey: page.querySelector('#ApiKey').value.trim()
+                    })
+                }).then(function (result) {
+                    output.textContent = '✅ ' + (result.Message || result.message || 'Conexión correcta.');
+                }).catch(function (response) {
+                    if (response && typeof response.json === 'function') {
+                        response.json().then(function (body) {
+                            output.textContent = '❌ ' + ((body && (body.Message || body.message)) || 'Error de conexión.');
+                        }).catch(function () {
+                            output.textContent = '❌ Error de conexión.';
+                        });
+                    } else {
+                        output.textContent = '❌ Error de conexión.';
+                    }
+                });
+            }
+
+            document.querySelector('#SeerrReporterConfigPage')
+                .addEventListener('pageshow', function () {
+                    load(this);
+                });
+
+            document.querySelector('#SeerrReporterConfigForm')
+                .addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    save(document.querySelector('#SeerrReporterConfigPage'));
+                    return false;
+                });
+
+            document.querySelector('#TestConnectionButton')
+                .addEventListener('click', function () {
+                    testConnection(document.querySelector('#SeerrReporterConfigPage'));
+                });
+        })();
+    </script>
+</div>
+</body>
+</html>

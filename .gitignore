@@ -1,0 +1,13 @@
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+.vs/
+.idea/
+.vscode/
+.DS_Store
+out/
+
+# canvas de diseño seedeado (~2 MB); las fuentes .dc.html sí se versionan
+design/seerr-reporter-ui.html

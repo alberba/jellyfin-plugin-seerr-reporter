@@ -1,0 +1,85 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 680,
+      "title": "Página de detalle"
+    },
+    {
+      "file": "ButtonStates.dc.html",
+      "x": 1400,
+      "y": 0,
+      "w": 960,
+      "h": 480,
+      "title": "Botón — estados"
+    },
+    {
+      "file": "Modal.dc.html",
+      "x": 0,
+      "y": 880,
+      "w": 1280,
+      "h": 820,
+      "title": "Modal — reposo"
+    },
+    {
+      "file": "ModalSelected.dc.html",
+      "x": 1400,
+      "y": 880,
+      "w": 1280,
+      "h": 820,
+      "title": "Modal — enviando"
+    },
+    {
+      "file": "Toast.dc.html",
+      "x": 0,
+      "y": 1820,
+      "w": 1280,
+      "h": 720,
+      "title": "Confirmación"
+    },
+    {
+      "file": "ToastVariants.dc.html",
+      "x": 1400,
+      "y": 1820,
+      "w": 1060,
+      "h": 360,
+      "title": "Errores"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "overview",
+      "x": -520,
+      "y": 0,
+      "w": 440,
+      "text": "Valores tomados del fuente de jellyfin-web 12.0, no de memoria.\n\nEn 12.0 el tema son variables CSS (--jf-palette-*) y el usuario elige entre 6 temas. Lo dibujado aquí es el tema oscuro por defecto: fondo #101010, barras #202020, campos rgba(255,255,255,.09), acento #00a4dc.\n\nreporter.js usa esas variables, así que sigue al tema que elija cada usuario.\n\nEl póster es un marcador, no arte real."
+    },
+    {
+      "id": "btn-decision",
+      "x": 1400,
+      "y": -170,
+      "w": 960,
+      "text": "DECISIÓN — aplicada en reporter.js: el botón va sin etiqueta.\n\nEn 10.11.8 ningún botón de .mainDetailButtons usa detailButton-text — todos son icono + title. reporter.js ponía la etiqueta y eso dejaba el botón 22 px más alto que sus vecinos."
+    },
+    {
+      "id": "modal-note",
+      "x": -520,
+      "y": 880,
+      "w": 440,
+      "text": "DECISIÓN — aplicada: el modal es un formDialog de Jellyfin. Cabecera y pie --jf-palette-background-paper, cuerpo --jf-palette-background-default, fondo negro al 50%, radio 3 px y la sombra literal de dialoghelper.scss.\n\nOjo al botón Enviar: en 12.0 primary-contrastText es rgba(0,0,0,.87), así que va texto OSCURO sobre el cian, no blanco como en 10.11."
+    },
+    {
+      "id": "toast-note",
+      "x": -520,
+      "y": 1820,
+      "w": 440,
+      "text": "DECISIÓN — aplicada: se queda el toast nativo, abajo a la IZQUIERDA, min-width 20em y fondo #303030, también para los errores.\n\nEl rojo #cb272a queda descartado: Jellyfin no tiene toast de error y el mensaje ya dice que algo ha fallado."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
