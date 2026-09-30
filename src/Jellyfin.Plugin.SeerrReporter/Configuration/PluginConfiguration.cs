@@ -41,7 +41,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
     /// <summary>
     /// Gets or sets a value indicating whether the reporter script is injected into
-    /// jellyfin-web's index.html on startup. Requires a writable web directory.
+    /// jellyfin-web's index.html through File Transformation, or on disk as a fallback.
     /// </summary>
     public bool InjectClientScript { get; set; } = true;
 

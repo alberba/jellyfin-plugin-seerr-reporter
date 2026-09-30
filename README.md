@@ -9,7 +9,8 @@ el cliente solo habla con el endpoint del plugin dentro de Jellyfin.
 
 ## Cómo funciona
 
-1. El plugin inyecta `reporter.js` en `index.html` de jellyfin-web al arrancar.
+1. El plugin registra al arrancar una transformación que añade `reporter.js` al
+   `index.html` servido por jellyfin-web, en memoria y sin modificar el disco.
 2. El script añade un botón **⚠️ Reportar** en la página de detalle de películas,
    series y episodios.
 3. El modal permite elegir tipo (🎬 Vídeo / 🔊 Audio / 💬 Subtítulos / ⚠️ Otro) y
@@ -23,7 +24,9 @@ el cliente solo habla con el endpoint del plugin dentro de Jellyfin.
 - Seerr / Overseerr / Jellyseerr accesible desde el contenedor de Jellyfin.
 - El título debe existir en Seerr (`mediaInfo`), es decir, haber sido solicitado
   o escaneado por Seerr. Si no, no hay contra qué abrir la incidencia.
-- El directorio web de Jellyfin debe ser escribible para la inyección automática.
+- [File Transformation](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation),
+  en una versión compatible con tu servidor Jellyfin. Permite inyectar el script
+  sin permisos de escritura en el directorio web (incluida la imagen Docker oficial).
 
 ## Compilar
 
@@ -39,11 +42,14 @@ dotnet publish src/Jellyfin.Plugin.SeerrReporter/Jellyfin.Plugin.SeerrReporter.c
 
 Todo desde el panel web, sin tocar ficheros en el servidor.
 
-1. **Dashboard → Plugins → Repositorios → +**
+1. Instala **File Transformation** desde su repositorio:
+   `https://www.iamparadox.dev/jellyfin/plugins/manifest.json`.
+   No necesita configuración.
+2. **Dashboard → Plugins → Repositorios → +**
    - Nombre: `Seerr Reporter`
    - URL: `https://raw.githubusercontent.com/alberba/jellyfin-plugin-seerr-reporter/main/manifest.json`
-2. **Dashboard → Plugins → Catálogo → Seerr Reporter → Instalar**
-3. Reinicia Jellyfin.
+3. **Dashboard → Plugins → Catálogo → Seerr Reporter → Instalar**
+4. Reinicia Jellyfin.
 
 Las versiones siguientes aparecen solas en el catálogo: basta con etiquetar
 un `v1.0.1` en el repositorio para que la Action compile, publique el `.zip`
@@ -91,8 +97,11 @@ Cuerpo de `Report`:
   se reportan contra su serie padre. Un ítem con solo TVDB id no se puede mapear.
 - La incidencia se crea con el usuario dueño de la API Key (administrador). El
   nombre del usuario de Jellyfin que reporta se añade al texto del mensaje.
-- Una actualización del servidor reescribe el directorio web y elimina el script;
-  el plugin lo vuelve a inyectar en cada arranque.
+- La transformación se registra en cada arranque y sobrevive a actualizaciones
+  del servidor sin modificar los ficheros web.
+- Si File Transformation no está disponible o falla el registro, se registra un
+  aviso y se intenta la inyección en disco. Esa alternativa requiere un directorio
+  web escribible; si falla, el log indica que hay que instalar File Transformation.
 
 ## Licencia
 
